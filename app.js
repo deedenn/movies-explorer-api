@@ -10,7 +10,7 @@ const app = express();
 const router = require('./routes');
 const signRouter = require('./routes/sign');
 const { auth } = require('./middlewares/auth');
-const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { requestLogger, errorLogger } = require('./middlewares/errorLogger');
 
 mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb', {
   useNewUrlParser: true,
