@@ -4,30 +4,37 @@ const { regExp } = require('./constants');
 const loginValidation = {
   body: Joi.object().keys({
     email: Joi.string().required().email(),
-    password: Joi.string().required().min(8),
+    password: Joi.string().required(),
   }),
 };
 
 const registrationValidation = {
   body: Joi.object().keys({
     email: Joi.string().required().email(),
-    password: Joi.string().required().min(8),
-    name: Joi.string().min(2).max(30),
-    about: Joi.string().min(2).max(30),
-    avatar: Joi.string().regex(regExp),
+    password: Joi.string().required(),
+    name: Joi.string().min(2).max(30).required(),
   }),
 };
 
 const createMoviesValidation = {
   body: Joi.object().keys({
-    name: Joi.string().required().min(2).max(30),
-    link: Joi.string().required().regex(regExp),
+    country: Joi.string().required(),
+    director: Joi.string().required(),
+    duration: Joi.number().required(),
+    year: Joi.string().required(),
+    description: Joi.string().required(),
+    image: Joi.string().required().regex(regExp),
+    trailerLink: Joi.string().required().regex(regExp),
+    thumbnail: Joi.string().required().regex(regExp),
+    movieId: Joi.number().required(),
+    nameRU: Joi.string().required(),
+    nameEN: Joi.string().required(),
   }),
 };
 
 const deleteMoviesValidation = {
   params: Joi.object().keys({
-    moviesId: Joi.string().hex().length(24).required(),
+    _id: Joi.string().hex().length(24).required(),
   }),
 };
 
@@ -35,7 +42,7 @@ const deleteMoviesValidation = {
 const updateProfileValidation = {
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30).required(),
-    about: Joi.string().min(2).max(30).required(),
+    email: Joi.string().required().email(),
   }),
 };
 

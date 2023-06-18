@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
-//require('dotenv').config();
+require('dotenv').config();
 
 const { PORT = 3000 } = process.env;
 const { errors } = require('celebrate');
@@ -9,8 +9,6 @@ const { errors } = require('celebrate');
 const app = express();
 
 const router = require('./routes');
-const signRouter = require('./routes/sign');
-const { auth } = require('./middlewares/auth');
 const NotFoundError = require('./errors/notfound');
 const { centralError } = require('./middlewares/centralError');
 const { requestLogger, errorLogger } = require('./middlewares/errorLogger');
@@ -32,9 +30,6 @@ app.get('/crash-test', () => {
     throw new Error('Сервер падает');
   }, 0);
 });
-
-app.use(signRouter);
-app.use(auth);
 
 app.use(router);
 

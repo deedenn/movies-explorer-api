@@ -1,10 +1,11 @@
-const Movies = require('../models/movies');
+const Movie = require('../models/movies');
 const BadRequestError = require('../errors/badrequest');
 const NotFoundError = require('../errors/notfound');
 const ForbiddenError = require('../errors/forbidden');
 
 const getMovies = (req, res, next) => {
-  Movies.find({})
+  Movie.find({ owner: req.user._id })
+    .populate(['owner'])
     .then((movies) => {
       res.send(movies);
     })
@@ -15,8 +16,35 @@ const getMovies = (req, res, next) => {
 
 const createMovies = (req, res, next) => {
   const { _id } = req.user;
-  const { name, link } = req.body;
-  Movies.create({ name, link, owner: _id })
+
+  const {
+    country,
+    director,
+    duration,
+    year,
+    description,
+    image,
+    trailerLink,
+    nameRU,
+    nameEN,
+    thumbnail,
+    movieId,
+  } = req.body;
+
+  Movie.create({
+    country,
+    director,
+    duration,
+    year,
+    description,
+    image,
+    trailerLink,
+    nameRU,
+    nameEN,
+    thumbnail,
+    movieId,
+    owner: _id,
+  })
     .then((newMovies) => {
       res.status(201).send(newMovies);
     })
@@ -30,16 +58,14 @@ const createMovies = (req, res, next) => {
 };
 
 const deleteMovies = (req, res, next) => {
-  const { moviesId } = req.params;
-
-  Movies.findById(moviesId)
+  Movie.findById({ _id: req.params._id })
     .then((movies) => {
       if (!movies) {
         throw new NotFoundError('Карточка с указанным ID не найдена.');
       } else if (movies.owner.toString() !== req.user._id) {
         throw new ForbiddenError('Запрещено удалять не свои карточки');
       } else {
-        return Movies.deleteOne({ _id: moviesId }).then(() => res.send(movies));
+        return Movie.deleteOne({ _id: req.params._id }).then(() => res.send(movies));
       }
     })
     .catch((err) => {

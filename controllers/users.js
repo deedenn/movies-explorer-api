@@ -28,18 +28,17 @@ const getInfoUser = (req, res, next) => {
 
 const createUser = (req, res, next) => {
   const {
-    name, about, avatar, email, password,
+    name, email, password,
   } = req.body;
   bcrypt
     .hash(password, 10)
     .then((hash) => User.create({
-      name, about, avatar, email, password: hash,
+      name, email, password: hash,
     }))
     .then((newUser) => {
       res.status(200).send({
         email: newUser.email,
         name: newUser.name,
-        about: newUser.about,
       });
     })
     .catch((err) => {
@@ -61,11 +60,11 @@ const createUser = (req, res, next) => {
 
 const updateUser = (req, res, next) => {
   const owner = req.user._id;
-  const { name, about } = req.body;
+  const { name } = req.body;
 
   User.findByIdAndUpdate(
     owner,
-    { name, about },
+    { name },
     {
       new: true,
       runValidators: true,
