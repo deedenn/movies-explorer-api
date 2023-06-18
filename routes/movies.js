@@ -8,7 +8,7 @@ const {
 const moviesRouter = express.Router();
 const {
   getMovies, createMovies, deleteMovies,
-} = require('../controllers/cards');
+} = require('../controllers/movies');
 
 moviesRouter.get('/movies', getMovies);
 moviesRouter.post('/movies', celebrate(createMoviesValidation), createMovies);

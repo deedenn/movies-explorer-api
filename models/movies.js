@@ -10,11 +10,11 @@ const movieSchema = new mongoose.Schema({
     required: true,
   },
   duration: {
-    type: Int16Array,
+    type: Number,
     required: true,
   },
   year: {
-    type: Int16Array,
+    type: Number,
     required: true,
   },
   description: {
@@ -51,4 +51,4 @@ const movieSchema = new mongoose.Schema({
   },
 })
 
-module.exports = mongoose.model('Movies', cardSchema);
+module.exports = mongoose.model('Movies', movieSchema);

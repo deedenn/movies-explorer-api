@@ -27,7 +27,7 @@ const createMoviesValidation = {
 
 const deleteMoviesValidation = {
   params: Joi.object().keys({
-    cardId: Joi.string().hex().length(24).required(),
+    moviesId: Joi.string().hex().length(24).required(),
   }),
 };
 
