@@ -4,7 +4,7 @@
 Адрес репозитория: https://github.com/deedenn/movies-explorer-api
 ## Ссылки на проект
 
-IP 158.160.61.188
+IP 158.160.36.164
 
 Frontend https://mymovie.nomoredomains.rocks
 

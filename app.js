@@ -6,8 +6,13 @@ require('dotenv').config();
 const { PORT = 3000 } = process.env;
 const { errors } = require('celebrate');
 
+const cors = require('cors');
+
 const app = express();
 
+app.use(cors());
+
+const helmet = require('helmet');
 const router = require('./routes');
 const NotFoundError = require('./errors/notfound');
 const { centralError } = require('./middlewares/centralError');
@@ -19,6 +24,8 @@ mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb', {
   .then(() => {
     console.log('База данных подключена');
   });
+
+app.use(helmet());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
