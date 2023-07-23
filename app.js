@@ -11,7 +11,7 @@ const app = express();
 
 const helmet = require('helmet');
 app.use(helmet());
-app.use(cors());
+app.use(cors);
 
 const router = require('./routes');
 const NotFoundError = require('./errors/notfound');
