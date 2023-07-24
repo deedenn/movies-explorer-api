@@ -1,11 +1,16 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
-const { PORT = 3000 } = process.env;
+require('dotenv').config();
 
+const { PORT = 3000 } = process.env;
 const { errors } = require('celebrate');
+const cors = require('cors');
 
 const app = express();
+
+app.use(cors());
+
 const helmet = require('helmet');
 
 const router = require('./routes');
@@ -27,7 +32,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(requestLogger);
-app.use(cors);
 
 app.get('/crash-test', () => {
   setTimeout(() => {
