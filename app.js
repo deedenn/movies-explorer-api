@@ -16,7 +16,6 @@ const helmet = require('helmet');
 const router = require('./routes');
 const NotFoundError = require('./errors/notfound');
 const { centralError } = require('./middlewares/centralError');
-const cors = require('./middlewares/cors');
 const { requestLogger, errorLogger } = require('./middlewares/errorLogger');
 
 mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb', {
