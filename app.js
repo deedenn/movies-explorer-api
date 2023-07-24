@@ -1,19 +1,17 @@
 const express = require('express');
-require('dotenv').config();
-
 const mongoose = require('mongoose');
+
 const { PORT = 3000 } = process.env;
+
 const { errors } = require('celebrate');
 
 const app = express();
-
 const helmet = require('helmet');
-
-app.use(helmet());
 
 const router = require('./routes');
 const NotFoundError = require('./errors/notfound');
 const { centralError } = require('./middlewares/centralError');
+const cors = require('./middlewares/cors');
 const { requestLogger, errorLogger } = require('./middlewares/errorLogger');
 
 mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb', {
@@ -23,10 +21,13 @@ mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb', {
     console.log('База данных подключена');
   });
 
+app.use(helmet());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(requestLogger);
+app.use(cors);
 
 app.get('/crash-test', () => {
   setTimeout(() => {
