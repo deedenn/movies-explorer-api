@@ -1,6 +1,5 @@
 const express = require('express');
 require('dotenv').config();
-const cors = require('cors');
 
 const mongoose = require('mongoose');
 const { PORT = 3001 } = process.env;
@@ -23,15 +22,6 @@ mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb', {
   .then(() => {
     console.log('База данных подключена');
   });
-
-const options = {
-  origin: '*',
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  preflightContinue: false,
-  optionsSuccessStatus: 204,
-};
-app.use(cors(options));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
